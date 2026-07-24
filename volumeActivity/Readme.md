@@ -13,7 +13,7 @@ Al finalizar esta práctica, el estudiante será capaz de:
 
 ## Descripción de la actividad
 
-Inicie dos contenedores llamados **`c1`** y **`c2`** en **modo desacoplado (detached)** utilizando **el mismo volumen Docker**.
+Inicie dos contenedores llamados **`c1`** y **`c2`** en **modo desacoplado (detached)** utilizando **el mismo volumen Docker** con la imagen **alpine:3.24** con el comando sleep infinity.
 
 - Un contenedor debe **escribir un archivo** en el volumen.
 - El otro contenedor debe **leer ese archivo** desde el mismo volumen.
@@ -32,35 +32,39 @@ El volumen debe llamarse **`my_shared_volume`** y debe montarse en la ruta **`/d
 
 ## Pasos de la práctica
 
-### Paso 1: Copiar el script en el contenedor `c1`
+### Paso 1: Copiar los dos scripts en el contenedor `c1`
 
-En una pestaña de la terminal, copie el archivo **`contador.sh`** dentro del directorio **`/datos`** del contenedor **`c1`**.
+En una pestaña de la terminal, copie los archivos **`contador.sh`** y **`creador.sh`** dentro del directorio **`/datos`** del contenedor **`c1`**.
 
-💡 **Pista:** piense en cómo transferir archivos **desde el host hacia un contenedor**.
-
----
-
-### Paso 2: Ejecutar el contenedor `c1`
-
-Ejecute el contenedor **`c1`** de forma que el script ubicado en **`/datos`** sea ejecutado.
-
-💡 **Pista:** el contenedor debe ejecutar directamente un archivo `.sh`.
+💡 **Pista:** usar el comando **docker cp**.
 
 ---
 
-### Paso 3: Copiar el script en el contenedor `c2`
+### Paso 2: Ejecución en el contenedor `c1`
 
-En otra pestaña de la terminal, copie el archivo **`creador.sh`** dentro del directorio **`/datos`** del contenedor **`c2`**.
+Ejecute usando el contenedor **`c1`** el script **`contador.sh`**.
 
-💡 **Pista:** este paso es conceptualmente igual al Paso 1, pero aplicado al segundo contenedor.
+💡 **Pista:** es necesario dar permisos de ejecución al script con chmod +x <nombre archivo>.
+
+💡 **Pista:** para ejecutar: sh <nombre archivo>.
+
+💡 **Pista:** para ejecutar se necesita el flag -it.
 
 ---
 
-### Paso 4: Ejecutar el contenedor `c2`
+### Paso 3: Ejecutar el contenedor `c2`
 
-Ejecute el contenedor **`c2`**.
+En otra pestaña de la terminal, ejecute en el contenedor **`c2`** el script **`contador.sh`**.
 
-💡 **Pista:** observe cómo este contenedor accede a información creada por otro contenedor a través del volumen compartido.
+---
+
+### Paso 4: Limpieza
+
+Cuando termine la práctica, detenga el contador con **Ctrl+C**, elimine los contenedores **`c1`** y **`c2`** y, finalmente, elimine el volumen **`my_shared_volume`**.
+
+💡 **Pista:** un volumen no puede eliminarse mientras algún contenedor lo esté usando; primero elimine los contenedores.
+
+💡 **Pista:** use **docker rm -f <nombre contenedor>** y **docker volume rm <nombre volumen>**.
 
 ---
 
